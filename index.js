@@ -18,38 +18,45 @@ const formatTime = seconds => {
 };
 
 const main = () => {
-    const distance = parseFloat(prompt("Ingresa la distancia en kilómetros"));
-    console.log(`Distancia ingresada: ${distance} kilómetros`);
+    let continueInput = true;
 
-    const timeInput = prompt("Ingresa el tiempo en formato 'hh:mm:ss':");
-    const timeParts = timeInput.split(":");
-    const hours = parseFloat(timeParts[0]);
-    const minutes = parseFloat(timeParts[1]);
-    const seconds = parseFloat(timeParts[2]);
-    console.log(`Tiempo ingresado: ${hours} horas, ${minutes} minutos, ${seconds} segundos`);
+    while (continueInput) {
+        const distance = parseFloat(prompt("Ingresa la distancia en kilómetros"));
+        console.log(`Distancia ingresada: ${distance} kilómetros`);
 
-    const totalTimeSeconds = calculateTotalTime(hours, minutes, seconds);
-    console.log(`Tiempo total en segundos: ${totalTimeSeconds} segundos`);
+        const timeInput = prompt("Ingresa el tiempo en formato 'hh:mm:ss':");
+        const timeParts = timeInput.split(":");
+        const hours = parseFloat(timeParts[0]);
+        const minutes = parseFloat(timeParts[1]);
+        const seconds = parseFloat(timeParts[2]);
+        console.log(`Tiempo ingresado: ${hours} horas, ${minutes} minutos, ${seconds} segundos`);
 
-    const averagePace = calculateAveragePace(totalTimeSeconds, distance);
-    const formattedTime = formatTime(Math.round(averagePace));
-    console.log(`Tu promedio es de ${formattedTime} por kilómetro.`);
+        const totalTimeSeconds = calculateTotalTime(hours, minutes, seconds);
+        console.log(`Tiempo total en segundos: ${totalTimeSeconds} segundos`);
 
-    let message = `Tu promedio es de ${formattedTime} por kilómetro.`;
+        const averagePace = calculateAveragePace(totalTimeSeconds, distance);
+        const formattedTime = formatTime(Math.round(averagePace));
+        console.log(`Tu promedio es de ${formattedTime} por kilómetro.`);
 
-    switch (true) {
-        case averagePace > 600: // Más de 10 minutos por kilómetro
-            message += "\n¡Vamos, puedes mejorar tu ritmo!";
-            break;
-        case averagePace <= 360: // Menos de 6 minutos por kilómetro
-            message += "\n¡Excelente ritmo!";
-            break;
-        default:
-            message += "\nSigue entrenando para mejorar tu tiempo.";
+        let message = `Tu promedio es de ${formattedTime} por kilómetro.`;
+
+        switch (true) {
+            case averagePace > 600: // Más de 10 minutos por kilómetro
+                message += "\n¡Vamos, puedes mejorar tu ritmo!";
+                break;
+            case averagePace <= 360: // Menos de 6 minutos por kilómetro
+                message += "\n¡Excelente ritmo!";
+                break;
+            default:
+                message += "\nSigue entrenando para mejorar tu tiempo.";
+        }
+
+        console.log(message);
+        alert(message);
+
+        const continueInputStr = prompt("¿Deseas ingresar otro conjunto de datos? (s/n)").toLowerCase();
+        continueInput = continueInputStr === "s";
     }
-
-    console.log(message);
-    alert(message);
 };
 
 main();
