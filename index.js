@@ -23,10 +23,10 @@ const main = () => {
     let continueInput = true;
 
     while (continueInput) {
-        const distance = parseFloat(prompt("Ingresa la distancia en kilómetros"));
+        const distance = parseFloat(prompt("Ingresa la distancia recorrida en kilómetros"));
         console.log(`Distancia ingresada: ${distance} kilómetros`);
 
-        const timeInput = prompt("Ingresa el tiempo en formato 'hh:mm:ss':");
+        const timeInput = prompt("Ingresa el tiempo de carrera en formato 'hh:mm:ss':");
         const timeParts = timeInput.split(":");
         const hours = parseFloat(timeParts[0]);
         const minutes = parseFloat(timeParts[1]);
