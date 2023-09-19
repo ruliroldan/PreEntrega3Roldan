@@ -18,6 +18,8 @@ const formatTime = seconds => {
 };
 
 const main = () => {
+    const runsData = [];
+
     let continueInput = true;
 
     while (continueInput) {
@@ -54,9 +56,22 @@ const main = () => {
         console.log(message);
         alert(message);
 
+        // Agregar los datos de esta carrera al array de datos
+        runsData.push({
+            distance,
+            totalTimeSeconds,
+            averagePace
+        });
+
         const continueInputStr = prompt("¿Deseas ingresar otro conjunto de datos? (s/n)").toLowerCase();
         continueInput = continueInputStr === "s";
     }
+
+    // Ejemplo de uso de map para obtener un array de distancias
+    const distances = runsData.map(run => run.distance);
+    console.log("Distancias de todas las carreras:", distances);
+
+    // Aquí puedes agregar más operaciones utilizando otros métodos de array, como filter, find, forEach, etc.
 };
 
 main();
