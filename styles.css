@@ -1,0 +1,9 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#result {
+    font-weight: bold;
+    margin-top: 20px;
+}

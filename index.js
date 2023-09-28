@@ -20,13 +20,24 @@ const formatTime = seconds => {
 const main = () => {
     const runsData = [];
 
-    let continueInput = true;
+    while (true) {
+        const distanceInput = prompt("Ingresa la distancia recorrida en kilómetros");
 
-    while (continueInput) {
-        const distance = parseFloat(prompt("Ingresa la distancia recorrida en kilómetros"));
+        if (isNaN(distanceInput) || parseFloat(distanceInput) <= 0) {
+            alert("La distancia debe ser un número mayor que 0.");
+            continue;
+        }
+
+        const distance = parseFloat(distanceInput);
         console.log(`Distancia ingresada: ${distance} kilómetros`);
 
         const timeInput = prompt("Ingresa el tiempo de carrera en formato 'hh:mm:ss':");
+
+        if (!/^(\d+):(\d{2}):(\d{2})$/.test(timeInput)) {
+            alert("El formato del tiempo debe ser 'hh:mm:ss'.");
+            continue;
+        }
+
         const timeParts = timeInput.split(":");
         const hours = parseFloat(timeParts[0]);
         const minutes = parseFloat(timeParts[1]);
@@ -63,7 +74,9 @@ const main = () => {
         });
 
         const continueInputStr = prompt("¿Deseas ingresar otro conjunto de datos? (s/n)").toLowerCase();
-        continueInput = continueInputStr === "s";
+        if (continueInputStr !== "s") {
+            break;
+        }
     }
 
     const distances = runsData.map(run => run.distance);
