@@ -1,4 +1,3 @@
-// Función para calcular el tiempo total en segundos
 const calculateTotalTime = (hours, minutes, seconds) => hours * 3600 + minutes * 60 + seconds;
 
 // Función para calcular el ritmo promedio
