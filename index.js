@@ -1,6 +1,5 @@
 const calculateTotalTime = (hours, minutes, seconds) => hours * 3600 + minutes * 60 + seconds;
 
-// Función para calcular el ritmo promedio
 const calculateAveragePace = (totalTimeSeconds, distance) => {
     if (totalTimeSeconds <= 0 || distance <= 0) {
         return "El tiempo y la distancia deben ser mayores que 0.";
@@ -10,7 +9,6 @@ const calculateAveragePace = (totalTimeSeconds, distance) => {
     return averagePaceSecondsPerKm;
 };
 
-// Función para formatear el tiempo en HH:MM:SS
 const formatTime = seconds => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -41,17 +39,14 @@ document.addEventListener("DOMContentLoaded", function () {
             ? "¡Vamos, puedes mejorar tu ritmo!"
             : (averagePace <= 360 ? "¡Excelente ritmo!" : "Sigue entrenando para mejorar tu tiempo.");
 
-        // Mostrar resultado en el DOM
         resultDiv.innerHTML = ""; // Limpia cualquier contenido anterior
         const resultParagraph = document.createElement("p");
         resultParagraph.textContent = `Tu promedio es de ${formattedTime} por kilómetro.`;
         resultDiv.appendChild(resultParagraph);
 
-        // Guardar en el almacenamiento local
         localStorage.setItem("averagePace", averagePace);
     });
 
-    // Recuperar datos del almacenamiento local al cargar la página
     const savedAveragePace = localStorage.getItem("averagePace");
     if (savedAveragePace) {
         const formattedTime = formatTime(Math.round(parseFloat(savedAveragePace)));
