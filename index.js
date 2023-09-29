@@ -1,7 +1,7 @@
-// Función para calcular el tiempo total en segundos
+
 const calculateTotalTime = (hours, minutes, seconds) => hours * 3600 + minutes * 60 + seconds;
 
-// Función para calcular el ritmo promedio
+
 const calculateAveragePace = (totalTimeSeconds, distance) => {
     if (totalTimeSeconds <= 0 || distance <= 0) {
         return "El tiempo y la distancia deben ser mayores que 0.";
@@ -11,7 +11,6 @@ const calculateAveragePace = (totalTimeSeconds, distance) => {
     return averagePaceSecondsPerKm;
 };
 
-// Función para formatear el tiempo en formato 'hh:mm:ss'
 const formatTime = seconds => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -20,7 +19,6 @@ const formatTime = seconds => {
     return `${hours} horas, ${minutes} minutos y ${remainingSeconds} segundos`;
 };
 
-// Función principal
 const main = () => {
     const calculateButton = document.getElementById("calculateButton");
     const resultDiv = document.getElementById("result");
@@ -42,11 +40,9 @@ const main = () => {
             ? "¡Vamos, puedes mejorar tu ritmo!"
             : (averagePace <= 360 ? "¡Excelente ritmo!" : "Sigue entrenando para mejorar tu tiempo.");
 
-        // Actualiza la interfaz de usuario con los resultados
         resultDiv.innerHTML = `<p>Tu promedio es de ${formattedTime} por kilómetro.</p>`;
         alert("¡HOLA RUNNER!\n" + message);
     });
 };
 
-// Llamamos a la función principal main al cargar la página
 window.onload = main;

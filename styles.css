@@ -1,5 +1,8 @@
 body {
-    background-color: #ccc;
+    background-image: url('img1.jpg'); 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
 }
 
 .container {
@@ -10,7 +13,7 @@ body {
 }
 
 h1 {
-    color: #007bff;
+    color:#007bff;
     font-family:inherit;
 }
 
