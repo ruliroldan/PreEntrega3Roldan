@@ -1,5 +1,7 @@
+// Función para calcular el tiempo total en segundos
 const calculateTotalTime = (hours, minutes, seconds) => hours * 3600 + minutes * 60 + seconds;
 
+// Función para calcular el ritmo promedio
 const calculateAveragePace = (totalTimeSeconds, distance) => {
     if (totalTimeSeconds <= 0 || distance <= 0) {
         return "El tiempo y la distancia deben ser mayores que 0.";
@@ -9,6 +11,7 @@ const calculateAveragePace = (totalTimeSeconds, distance) => {
     return averagePaceSecondsPerKm;
 };
 
+// Función para formatear el tiempo en formato 'hh:mm:ss'
 const formatTime = seconds => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -17,70 +20,33 @@ const formatTime = seconds => {
     return `${hours} horas, ${minutes} minutos y ${remainingSeconds} segundos`;
 };
 
+// Función principal
 const main = () => {
-    const runsData = [];
+    const calculateButton = document.getElementById("calculateButton");
+    const resultDiv = document.getElementById("result");
 
-    while (true) {
-        const distanceInput = prompt("Ingresa la distancia recorrida en kilómetros");
-
-        if (isNaN(distanceInput) || parseFloat(distanceInput) <= 0) {
-            alert("La distancia debe ser un número mayor que 0.");
-            continue;
-        }
+    calculateButton.addEventListener("click", () => {
+        const distanceInput = document.getElementById("distanceInput").value;
+        const timeInput = document.getElementById("timeInput").value;
 
         const distance = parseFloat(distanceInput);
-        console.log(`Distancia ingresada: ${distance} kilómetros`);
-
-        const timeInput = prompt("Ingresa el tiempo de carrera en formato 'hh:mm:ss':");
-
-        if (!/^(\d+):(\d{2}):(\d{2})$/.test(timeInput)) {
-            alert("El formato del tiempo debe ser 'hh:mm:ss'.");
-            continue;
-        }
-
         const timeParts = timeInput.split(":");
         const hours = parseFloat(timeParts[0]);
         const minutes = parseFloat(timeParts[1]);
         const seconds = parseFloat(timeParts[2]);
-        console.log(`Tiempo ingresado: ${hours} horas, ${minutes} minutos, ${seconds} segundos`);
-
         const totalTimeSeconds = calculateTotalTime(hours, minutes, seconds);
-        console.log(`Tiempo total en segundos: ${totalTimeSeconds} segundos`);
-
         const averagePace = calculateAveragePace(totalTimeSeconds, distance);
         const formattedTime = formatTime(Math.round(averagePace));
-        console.log(`Tu promedio es de ${formattedTime} por kilómetro.`);
 
-        let message = `Tu promedio es de ${formattedTime} por kilómetro.`;
+        let message = averagePace > 600
+            ? "¡Vamos, puedes mejorar tu ritmo!"
+            : (averagePace <= 360 ? "¡Excelente ritmo!" : "Sigue entrenando para mejorar tu tiempo.");
 
-        switch (true) {
-            case averagePace > 600: // Más de 10 minutos por kilómetro
-                message += "\n¡Vamos, puedes mejorar tu ritmo!";
-                break;
-            case averagePace <= 360: // Menos de 6 minutos por kilómetro
-                message += "\n¡Excelente ritmo!";
-                break;
-            default:
-                message += "\nSigue entrenando para mejorar tu tiempo.";
-        }
-
-        console.log(message);
-        alert(message);
-
-        runsData.push({
-            distance,
-            totalTimeSeconds,
-            averagePace
-        });
-
-        const continueInputStr = prompt("¿Deseas ingresar otro conjunto de datos? (s/n)").toLowerCase();
-        if (continueInputStr !== "s") {
-            break;
-        }
-    }
-
-    const distances = runsData.map(run => run.distance);
-    console.log("Distancias de todas las carreras:", distances);
+        // Actualiza la interfaz de usuario con los resultados
+        resultDiv.innerHTML = `<p>Tu promedio es de ${formattedTime} por kilómetro.</p>`;
+        alert("¡HOLA RUNNER!\n" + message);
+    });
 };
 
-main();
+// Llamamos a la función principal main al cargar la página
+window.onload = main;

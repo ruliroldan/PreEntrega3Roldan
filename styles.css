@@ -1,9 +1,32 @@
-.container {
-    max-width: 600px;
-    margin: 0 auto;
+body {
+    background-color: #ccc;
 }
 
-#result {
+.container {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    color: #007bff;
+    font-family:inherit;
+}
+
+label {
     font-weight: bold;
-    margin-top: 20px;
+}
+
+.form-control {
+    border-color: #007bff;
+}
+
+#calculateButton {
+    background-color: #007bff;
+    border: none;
+}
+
+#calculateButton:hover {
+    background-color: #0056b3;
 }
