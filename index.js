@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
     const calculateButton = document.getElementById("calculateButton");
-    const resultDiv = document.getElementById("result");
     const dailyAveragesDiv = document.getElementById("dailyAverages");
 
     let dailyAverages = [];
@@ -109,4 +108,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
         return `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     }
-});
