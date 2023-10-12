@@ -22,7 +22,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const timeInput = document.getElementById("timeInput").value;
 
         if (distanceInput === "" || timeInput === "") {
-            resultDiv.innerHTML = "Por favor, completa ambos campos.";
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Por favor, completa ambos campos.'
+            });
             return;
         }
 
@@ -33,7 +37,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const seconds = parseFloat(timeParts[2]);
 
         if (isNaN(distance) || isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
-            resultDiv.innerHTML = "Por favor, ingresa datos válidos.";
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Por favor, ingresa datos válidos.'
+            });
             return;
         }
 
@@ -45,10 +53,11 @@ document.addEventListener("DOMContentLoaded", function () {
             ? "¡Vamos, puedes mejorar tu ritmo!"
             : (averagePace <= 360 ? "¡Excelente ritmo!" : "Sigue entrenando para mejorar tu tiempo.");
 
-        resultDiv.innerHTML = "";
-        const resultParagraph = document.createElement("p");
-        resultParagraph.textContent = `Tu promedio es de ${formattedTime} por kilómetro.`;
-        resultDiv.appendChild(resultParagraph);
+        Swal.fire({
+            icon: 'info',
+            title: 'Resultado',
+            text: `Tu promedio es de ${formattedTime} por kilómetro. ${message}`
+        });
 
         dailyAverages.push({
             day: new Date().toLocaleDateString(),
@@ -83,5 +92,21 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => console.log("Datos guardados en data.json:", data))
             .catch(error => console.error("Error al guardar los datos:", error));
+    }
+
+    function calculateTotalTime(hours, minutes, seconds) {
+        return hours * 3600 + minutes * 60 + seconds;
+    }
+
+    function calculateAveragePace(totalTimeSeconds, distance) {
+        return totalTimeSeconds / distance;
+    }
+
+    function formatTime(totalSeconds) {
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        return `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     }
 });
