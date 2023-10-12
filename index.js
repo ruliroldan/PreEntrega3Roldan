@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     const calculateButton = document.getElementById("calculateButton");
     const dailyAveragesDiv = document.getElementById("dailyAverages");
+    const distanceInput = document.getElementById("distanceInput");
+    const timeInput = document.getElementById("timeInput");
 
     let dailyAverages = [];
 
@@ -17,25 +19,10 @@ document.addEventListener("DOMContentLoaded", function () {
     loadJSONData();
 
     calculateButton.addEventListener("click", function () {
-        const distanceInput = document.getElementById("distanceInput").value;
-        const timeInput = document.getElementById("timeInput").value;
+        const distance = parseFloat(distanceInput.value);
+        const timeInputValue = timeInput.value;
 
-        if (distanceInput === "" || timeInput === "") {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Por favor, completa ambos campos.'
-            });
-            return;
-        }
-
-        const distance = parseFloat(distanceInput);
-        const timeParts = timeInput.split(":");
-        const hours = parseFloat(timeParts[0]);
-        const minutes = parseFloat(timeParts[1]);
-        const seconds = parseFloat(timeParts[2]);
-
-        if (isNaN(distance) || isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
+        if (!isValidInput(distance) || !isValidTimeInput(timeInputValue)) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -43,6 +30,11 @@ document.addEventListener("DOMContentLoaded", function () {
             });
             return;
         }
+
+        const timeParts = timeInputValue.split(":");
+        const hours = parseFloat(timeParts[0]);
+        const minutes = parseFloat(timeParts[1]);
+        const seconds = parseFloat(timeParts[2]);
 
         const totalTimeSeconds = calculateTotalTime(hours, minutes, seconds);
         const averagePace = calculateAveragePace(totalTimeSeconds, distance);
@@ -82,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function saveJSONData() {
         fetch("data.json", {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -108,3 +100,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         return `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     }
+
+    function isValidInput(value) {
+        return !isNaN(value) && value > 0;
+    }
+
+    function isValidTimeInput(inputValue) {
+        const timeRegex = /^\d{1,2}:\d{2}:\d{2}$/;
+        return timeRegex.test(inputValue);
+    }
+});
