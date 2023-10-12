@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function saveJSONData() {
         fetch("data.json", {
-            method: "PUT",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
